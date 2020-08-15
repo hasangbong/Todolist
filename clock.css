@@ -57,6 +57,11 @@ body{
     padding-left: 200px;
 }
 
+.lineThrough{
+    text-decoration:line-through ;
+    text-decoration-color: darkgray;
+    text-decoration-style: double;
+}
 
 @keyframes fadeIn{
     from{

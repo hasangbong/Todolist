@@ -4,9 +4,20 @@ const toDoForm = document.querySelector(".js-toDoForm"), // html 문서에서 �
 
 const TODOS_LS = 'toDos';    //key 이름
 
-
+const LINE_TH ='lineThrough'
 
 let toDos = [];
+
+function finishToDo(event){ // checkbox 이벤트를 받아서 부모를 찾아서 class name을 넣어준다.
+    const chk = event.target;
+    const li = chk.parentNode;
+    if(this.checked){
+        li.classList.add(LINE_TH);
+    }else{
+        li.classList.remove(LINE_TH);
+    }
+}
+
 
 function deleteToDo(event){ //할일 삭제
     const btn = event.target; // 지울 타겟 설정
@@ -28,15 +39,21 @@ function saveToDos(){
 
 
 function paintToDo(text){ //localStorage에 저장된 text 및 이벤트 입력란으로 들어오는 값을 할일란에 표시한다.
-    const li = document.createElement("li"); //html 태그 생성
-    const delBtn = document.createElement("button");
-    const span = document.createElement("span");
     const newId = toDos.length + 1; //id 설정
-    delBtn.innerText = "❌";
-    delBtn.addEventListener("click",deleteToDo); // 할일 지움
+    const li = document.createElement("li"); //html 태그 생성
+    const delBtn = document.createElement("input");
+    delBtn.type = "button";
+    delBtn.value = "Del";
+    delBtn.style.height = "20px"
+    delBtn.addEventListener("click", deleteToDo); // 할일 지움
+    const span = document.createElement("span");
+    const chbx = document.createElement("input")
+    chbx.type = "checkbox";
+    chbx.addEventListener("change", finishToDo);
     span.innerText = text;
-    li.appendChild(delBtn); //li에 종속 시킴
+    li.appendChild(chbx);
     li.appendChild(span);
+    li.appendChild(delBtn); //li에 종속 시킴
     li.id = newId;
     toDoList.appendChild(li); 
     const toDoObj = {
@@ -69,3 +86,4 @@ function init(){
     toDoForm.addEventListener("submit", handleSubmit);
 }
 init(); //웹페이지가 켜지면 loadToDos함수를 실행 , 할일 입력란에 이벤트 발생시 handleSubmit 함수실행
+
