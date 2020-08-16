@@ -52,9 +52,8 @@ function paintToDo(text){ //localStorage에 저장된 text 및 이벤트 입력�
     delBtn.style.height = "20px"
     delBtn.addEventListener("click", deleteToDo); // 할일 지움
     const span = document.createElement("span");
-    const chbx = document.createElement("input")
+    const chbx = document.createElement("input");
     chbx.type = "checkbox";
-    chbx.classList.add(newId);
     chbx.addEventListener("change", finishToDo);
     span.innerText = text;
     li.appendChild(chbx);
