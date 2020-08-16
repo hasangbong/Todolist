@@ -59,8 +59,8 @@ body{
 
 .lineThrough{
     text-decoration:line-through ;
-    text-decoration-color: darkgray;
-    text-decoration-style: double;
+    text-decoration-color: black;
+    text-decoration-style: solid ;
 }
 
 @keyframes fadeIn{

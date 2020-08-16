@@ -2,19 +2,24 @@ const toDoForm = document.querySelector(".js-toDoForm"), // html 문서에서 �
     toDoInput = toDoForm.querySelector("input"),  
     toDoList = document.querySelector(".js-toDoList"); // 할일 표시 class
 
+
 const TODOS_LS = 'toDos';    //key 이름
 
 const LINE_TH ='lineThrough'
 
 let toDos = [];
 
+
 function finishToDo(event){ // checkbox 이벤트를 받아서 부모를 찾아서 class name을 넣어준다.
     const chk = event.target;
     const li = chk.parentNode;
+    const chId = li.id;
     if(this.checked){
         li.classList.add(LINE_TH);
+        localStorage.setItem(chId, JSON.stringify(this.checked));
     }else{
         li.classList.remove(LINE_TH);
+        window.localStorage.removeItem(chId);
     }
 }
 
@@ -49,6 +54,7 @@ function paintToDo(text){ //localStorage에 저장된 text 및 이벤트 입력�
     const span = document.createElement("span");
     const chbx = document.createElement("input")
     chbx.type = "checkbox";
+    chbx.classList.add(newId);
     chbx.addEventListener("change", finishToDo);
     span.innerText = text;
     li.appendChild(chbx);
@@ -61,6 +67,13 @@ function paintToDo(text){ //localStorage에 저장된 text 및 이벤트 입력�
         id : newId
     };
     toDos.push(toDoObj);//행렬에 객체를 더함
+    const checked = JSON.parse(localStorage.getItem(li.id));
+    chbx.checked = checked;
+    if(chbx.checked){
+        li.classList.add(LINE_TH);
+    }else{
+        li.classList.remove(LINE_TH);
+    }
 }    
 
 function handleSubmit(event){ // 할일란에 입력되는 event를 받아서 할일란에 쓴다. (paintToDo 함수 실행)
@@ -70,6 +83,7 @@ function handleSubmit(event){ // 할일란에 입력되는 event를 받아서 �
    toDoInput.value = "";
    saveToDos(); //입력된 event 저장을 위해 saveToDos 함수 실행
 }
+
 
 function loadToDos(){ //localStorage에 저장된 데이터가 있다면 text값을 개별로 불러와서 할일란에 쓴다.(paintToDo 함수 실행)
     const loadedToDos = localStorage.getItem(TODOS_LS);
